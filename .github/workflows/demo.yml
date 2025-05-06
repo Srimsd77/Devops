@@ -26,4 +26,4 @@ jobs:
 
       - name: Run deploy script on VPS
         run: |
-          ssh dh_3ix3hh@vps58357.dreamhostps.com "bash /home/dh_3ix3hh/yourproject/deploy.sh"
+          ssh dh_3ix3hh@vps58357.dreamhostps.com "bash /home/dh_3ix3hh/deploy.sh"
