@@ -1,0 +1,29 @@
+name: Deploy Django via SCP to VPS
+
+on:
+  push:
+    branches:
+      - master  # Change to your main branch if different
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.VPS_SSH_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H vps58357.dreamhostps.com >> ~/.ssh/known_hosts
+
+      - name: Copy project to VPS using SCP
+        run: |
+          scp -r . dh_3ix3hh@vps58357.dreamhostps.com:/home/dh_3ix3hh/git-actions/
+
+      - name: Run deploy script on VPS
+        run: |
+          ssh dh_3ix3hh@vps58357.dreamhostps.com "bash /home/dh_3ix3hh/yourproject/deploy.sh"
